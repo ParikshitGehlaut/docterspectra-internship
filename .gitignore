@@ -1,0 +1,6 @@
+image_segmentation/train
+image_segmentation/train_masks
+image_segmentation/val
+image_segmentation/val_masks
+.DS_Store
+__pycache__
