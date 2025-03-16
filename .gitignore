@@ -4,3 +4,6 @@ image_segmentation/val
 image_segmentation/val_masks
 .DS_Store
 __pycache__
+*.pth.*
+*.pth
+*.pt

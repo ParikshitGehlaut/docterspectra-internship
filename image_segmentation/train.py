@@ -15,7 +15,15 @@ from utils import (
 
 # Hyperparameters etc.
 LEARNING_RATE = 1e-4
-DEVICE = "mps"
+if torch.cuda.is_available():
+    DEVICE = torch.device("cuda")
+    print("Using CUDA (GPU)")
+elif torch.backends.mps.is_available():
+    DEVICE = torch.device("mps")
+    print("Using MPS (Apple Silicon GPU)")
+else:
+    DEVICE = torch.device("cpu")
+    print("Using CPU") 
 BATCH_SIZE = 16
 NUM_EPOCHS = 3
 NUM_WORKERS = 2
