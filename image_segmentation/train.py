@@ -83,7 +83,7 @@ def main():
             ToTensorV2(),
         ],
     )
-
+    model_path = './my_checkpoint.pth.tar' 
     model = UNET(in_channels=3, out_channels=1).to(DEVICE)
     loss_fn = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
@@ -101,7 +101,7 @@ def main():
     )
 
     if LOAD_MODEL:
-        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
+        load_checkpoint(model_path, model, DEVICE)
 
 
     check_accuracy(val_loader, model, device=DEVICE)

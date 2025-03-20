@@ -8,9 +8,9 @@ def save_checkpoint(state, filename="my_checkpoint.pth.tar"):
     print("=> Saving checkpoint")
     torch.save(state, filename)
 
-def load_checkpoint(checkpoint, model):
+def load_checkpoint(model_path, model, device):
     print("=> Loading checkpoint")
-    model.load_state_dict(checkpoint["state_dict"])
+    model.load_state_dict(torch.load(model_path, map_location=device)["state_dict"])
 
 def get_loaders(
     train_dir,
