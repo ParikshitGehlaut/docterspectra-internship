@@ -2,15 +2,14 @@ import torch
 import torchvision
 from dataset import CarvanaDataset
 from torch.utils.data import DataLoader
-import os
 
 def save_checkpoint(state, filename="my_checkpoint.pth.tar"):
     print("=> Saving checkpoint")
     torch.save(state, filename)
 
-def load_checkpoint(model_path, model, device):
+def load_checkpoint(checkpoint, model):
     print("=> Loading checkpoint")
-    model.load_state_dict(torch.load(model_path, map_location=device)["state_dict"])
+    model.load_state_dict(checkpoint["state_dict"])
 
 def get_loaders(
     train_dir,
@@ -53,7 +52,7 @@ def get_loaders(
 
     return train_loader, val_loader
 
-def check_accuracy(loader, model, device):
+def check_accuracy(loader, model, device="cuda"):
     num_correct = 0
     num_pixels = 0
     dice_score = 0
@@ -86,8 +85,6 @@ def save_predictions_as_imgs(
         with torch.no_grad():
             preds = torch.sigmoid(model(x))
             preds = (preds > 0.5).float()
-        if not os.path.exists(folder):
-            os.makedirs(folder)
         torchvision.utils.save_image(
             preds, f"{folder}/pred_{idx}.png"
         )

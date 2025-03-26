@@ -24,11 +24,11 @@ elif torch.backends.mps.is_available():
 else:
     DEVICE = torch.device("cpu")
     print("Using CPU") 
-BATCH_SIZE = 16
-NUM_EPOCHS = 3
+BATCH_SIZE = 2
+NUM_EPOCHS = 2
 NUM_WORKERS = 2
-IMAGE_HEIGHT = 160  # 1280 originally
-IMAGE_WIDTH = 240  # 1918 originally
+IMAGE_HEIGHT = 600  # 1280 originally
+IMAGE_WIDTH = 900  # 1918 originally
 PIN_MEMORY = True
 LOAD_MODEL = False
 TRAIN_IMG_DIR = "./train/"
@@ -83,7 +83,7 @@ def main():
             ToTensorV2(),
         ],
     )
-    model_path = './my_checkpoint.pth.tar' 
+
     model = UNET(in_channels=3, out_channels=1).to(DEVICE)
     loss_fn = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
@@ -101,7 +101,7 @@ def main():
     )
 
     if LOAD_MODEL:
-        load_checkpoint(model_path, model, DEVICE)
+        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
 
 
     check_accuracy(val_loader, model, device=DEVICE)

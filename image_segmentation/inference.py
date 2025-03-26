@@ -86,7 +86,6 @@ def evaluate_model(model, image_dir, mask_dir, image_filename, mask_filename, nu
 
 
 if __name__ == '__main__':
-    model_path = './my_checkpoint.pth.tar' 
     image_dir = './train/'    
     mask_dir = './train_masks/'     
     image_filename = '0cdf5b5d0ce1_01.jpg'         
@@ -104,10 +103,10 @@ if __name__ == '__main__':
         print("Using CPU") 
 
     model = UNET(out_channels=num_classes)
-    load_checkpoint(model_path, model, DEVICE)
+    load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
     model.to(DEVICE)
     model.eval()
     
-    scaling_factors = [2.0 , 1.5, 1.0, 0.75, 0.5, 0.25]
+    scaling_factors = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]
     
     evaluate_model(model, image_dir, mask_dir, image_filename, mask_filename, num_classes, DEVICE, scaling_factors)
